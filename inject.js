@@ -1,5 +1,8 @@
 if (document.cookie.indexOf('__ngDebug=true') !== -1) {
   bootstrapHint();
+  bootstrapScripts([
+    'content/scope2el.js'
+  ]);
 }
 
 function bootstrapHint () {
@@ -30,4 +33,16 @@ function bootstrapHint () {
 
   html.setAttribute('ng-hint', '');
   html.appendChild(script);
+}
+
+
+function bootstrapScripts(srcList){
+  var html = document.documentElement;
+
+  // inject into the application context from the content script context
+  srcList.forEach(function(src){
+    var script = document.createElement('script');
+    script.src = chrome.runtime.getURL(src);
+    html.appendChild(script);
+  });
 }
