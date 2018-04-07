@@ -38,5 +38,11 @@ function ScopesController($scope, inspectedApp) {
     $scope.inspectedScope = scopeId;
     inspectedApp.inspectScope(scopeId);
   };
+  
+  
+  $scope.searchText = '';
+  $scope.onSearch = function onSearch(text){
+    $scope.searchText = text;
+  }
 
 }

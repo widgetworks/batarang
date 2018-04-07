@@ -4,7 +4,9 @@ directive('batTabs', function ($compile, $templateCache, $http, inspectedApp) {
   return {
     restrict: 'E',
     transclude: true,
-    scope: {},
+    scope: {
+        defaultIndex: '<',
+    },
     templateUrl: 'components/tabs/tabs.html',
 
     replace: true,
@@ -50,9 +52,14 @@ directive('batTabs', function ($compile, $templateCache, $http, inspectedApp) {
         pane.selected = true;
         scope.currentPane = pane;
       };
-
+      
+      var defaultIndex = scope.panes.length - 1;
+      if (scope.hasOwnProperty('defaultIndex')){
+        defaultIndex = scope.defaultIndex;
+      }
+      
       scope.lastPane = scope.panes[0];
-      scope.select(scope.panes[scope.panes.length - 1]);
+      scope.select(scope.panes[defaultIndex]);
     }
 
   };

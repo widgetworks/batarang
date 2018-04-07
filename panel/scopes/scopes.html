@@ -1,7 +1,15 @@
 <div bat-vertical-split ng-controller="ScopesController">
 
   <div bat-vertical-left class="source-code">
-    <bat-scope-tree bat-model="scopes"></bat-scope-tree>
+    <bat-scope-search
+      bat-model="scopes"
+      on-search="onSearch(text)">
+    </bat-scope-search>
+    
+    <bat-scope-tree
+      bat-model="scopes"
+      search-text="searchText">
+    </bat-scope-tree>
   </div>
 
   <div bat-vertical-right>

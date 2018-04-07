@@ -128,3 +128,15 @@ bat-scope-tree .selected {
   color: #333;
 }
 */
+
+
+/*
+2018-04-07 Widget Works
+Use the text field to hide elements that don't match the search
+*/
+.scope-descriptor {
+  /* just a marker class */
+}
+.hide-scope {
+  display: none;
+}

@@ -5,6 +5,7 @@ angular.module('batarang.app', [
   'batarang.app.scopes',
   'batarang.app.perf',
 
+  'batarang.scope-search',
   'batarang.scope-tree',
   'batarang.code',
   'batarang.inspected-app',
