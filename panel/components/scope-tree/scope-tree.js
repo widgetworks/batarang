@@ -6,6 +6,8 @@ var indexOf = Array.prototype.indexOf;
 var forEach = Array.prototype.forEach;
 var slice = Array.prototype.slice;
 
+var $ = angular.element;
+
 function batScopeTreeDirective($compile, $document) {
   return {
     restrict: 'E',
@@ -155,7 +157,6 @@ function batScopeTreeDirective($compile, $document) {
     });
     
     
-    var $ = angular.element;
     $document.on('keydown', keyHandler);
     scope.$on('$destroy', function(){
       $document.off('keydown', keyHandler);
@@ -251,19 +252,48 @@ function batScopeTreeDirective($compile, $document) {
     }
     
     
+    /*
+    Search for text in a scope node where the given `el` is `span.webkit-html-attribute`
+    and the parent `span.scope-descriptor` element is shown/hidden.
+    
+    span.scope-descriptor <-- this is `el.parentElement`
+      span.webkit-html-tag
+      span.webkit-html-attribute    <-- this is given as `el` parameter
+      span.webkit-html-tag
+    */
     function filterEl(el, searchText){
-      if (searchText == '' || el.textContent.includes(searchText)){
+      var $el = $(el);
+      
+      var content = $el.data('prevContent') || el.textContent;
+      var results = searchText != '' ? content.split(searchText) : [];
+      
+      if (results.length > 1){
+        // Split search and add highlights
+        var newContent = results.join(`<span class="search-highlight">${searchText}</span>`);;
+        $el.html(newContent);
+      }
+      
+      if (searchText == '' || results.length > 1){
         // show
         el.parentElement.classList.remove(hideClass); // span
         el.parentElement.parentElement.classList.remove(isHiddenClass); // .children (that contains span)
+        
+        $el.data('prevContent', content);
       } else {
         // hide
         el.parentElement.classList.add(hideClass);
         el.parentElement.parentElement.classList.add(isHiddenClass);
       }
+      
+      if ((searchText == '' || results.length <= 1) && $el.data('prevContent')){
+        // Restore original content
+        $el.text($el.data('prevContent'));
+        $el.data('prevContent', null);
+      }
     }
     
-
+    
+    
   }
 }
 

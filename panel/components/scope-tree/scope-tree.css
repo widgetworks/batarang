@@ -140,3 +140,6 @@ Use the text field to hide elements that don't match the search
 .hide-scope {
   display: none;
 }
+.search-highlight {
+  background-color: #f1ea00;
+}
